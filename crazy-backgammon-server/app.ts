@@ -1,8 +1,9 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import { applyRoutes } from './game-manager/routes';
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import mongoose from 'mongoose';
+
+import {applyRoutes} from './src/game-manager/routes';
 
 const app = express();
 const port = 3004;

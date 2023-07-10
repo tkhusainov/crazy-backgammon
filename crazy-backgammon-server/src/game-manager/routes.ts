@@ -1,4 +1,3 @@
-
 import {gameManagerController} from './controller';
 
 export function applyRoutes(app) {

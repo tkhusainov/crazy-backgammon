@@ -1,11 +1,18 @@
 {
     "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist"
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "es6",
+        "noImplicitAny": false,
+        "outDir": "./dist",
+        "sourceMap": false,
+        "moduleResolution": "node",
+        "lib": [
+            "es7",
+            "DOM"
+        ],
+        "baseUrl": "./src"
     },
-    "lib": ["es2015"]
+    "exclude": ["node_modules"],
+    "include": ["./src/", "./app.ts", "./.eslintrc.js"]
 }

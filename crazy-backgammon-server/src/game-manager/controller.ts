@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import { gameManagerService } from "./service";
+import {Request, Response} from 'express';
+
+import {gameManagerService} from './service';
 
 class GameManagerController {
     async createGame(req: Request, res: Response) {

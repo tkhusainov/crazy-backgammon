@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
-import { useRequest } from '../hooks/request';
-import { createGame } from '../api/game.api';
+import React, {useCallback, useState} from 'react';
+
+import {useRequest} from '../hooks/request';
+import {createGame} from '../api/game.api';
 
 export const StartGameView: React.FC = () => {
     const [name, setName] = useState('');
@@ -8,7 +9,7 @@ export const StartGameView: React.FC = () => {
     const {send: createGameFn} = useRequest(createGame)
 
     const handleStartGame = useCallback(() => {
-        createGameFn(name, {isCrazy: false});
+        createGameFn(name, {isCrazy:  false});
     }, [createGameFn, name]);
 
     return (
