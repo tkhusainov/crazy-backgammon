@@ -1,16 +1,26 @@
-import React from 'react';
+import React, {Fragment, useState} from 'react';
 
-import './App.css';
 import {GameStatus} from './enums';
-import {StartGameView} from './views/start-game';
+import {CreateGameView} from './views/create-game';
+import {Layout} from './views/layout';
+import {InitialScreen} from './views/initial-screen';
+import {JoinGameView} from './views/join-game';
 
 function App() {
-    const status = GameStatus.New;
+    const [status, setStatus] = useState<GameStatus>(GameStatus.Initial);
+
     return (
-        <div className="App">
-            <div>Header</div>
-            {status === GameStatus.New && <StartGameView />}
-        </div>
+        <Layout>
+            <Fragment>
+                {status === GameStatus.Initial &&
+                    <InitialScreen
+                        onCreateGame={() => setStatus(GameStatus.CreateGame)}
+                        onJoinGame={() => setStatus(GameStatus.JoinGame)}
+                    />}
+                {status === GameStatus.CreateGame && <CreateGameView />}
+                {status === GameStatus.JoinGame && <JoinGameView />}
+            </Fragment>
+        </Layout>
     );
 }
 

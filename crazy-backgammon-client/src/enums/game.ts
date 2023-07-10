@@ -1,5 +1,7 @@
 export enum GameStatus {
-    New = 'new',
+    Initial = 'initial',
+    CreateGame = 'create-game',
+    JoinGame = 'join-game',
     InProgress = 'in-progress',
     Ended = 'ended'
 }
