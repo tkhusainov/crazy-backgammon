@@ -19,10 +19,12 @@ export const JoinGameView: React.FC = () => {
     }, [joinGame, name, code]);
 
     return (
-        <div>
-            <input type="text" placeholder={t(T_KEYS.NAME)} onChange={(e) => setName(e.target.value)} />
-            <input type="text" placeholder={t(T_KEYS.CODE)} onChange={(e) => setCode(e.target.value)} />
-            <button onClick={handleStartGame}>{t(T_KEYS.JOIN_GAME)}</button>
+        <div className='tw-flex tw-items-center tw-justify-center tw-h-full'>
+            <div className='tw-flex tw-flex-col'>
+                <input className='tw-mb-4' type="text" placeholder={t(T_KEYS.NAME)} onChange={(e) => setName(e.target.value)} />
+                <input className='tw-mb-4' type="text" placeholder={t(T_KEYS.CODE)} onChange={(e) => setCode(e.target.value)} />
+                <button className='tw-bg-blue tw-py-8 tw-px-12' onClick={handleStartGame}>{t(T_KEYS.JOIN_GAME)}</button>
+            </div>
         </div>
     )
 }

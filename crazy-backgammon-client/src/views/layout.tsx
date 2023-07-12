@@ -6,8 +6,8 @@ type Props = {
 
 export const Layout: React.FC<Props> = ({children}) => {
     return (
-        <div>
-            <div>Header</div>
+        <div className='tw-h-full tw-bg-gray-light'>
+            <div className='tw-h-12 tw-bg-green'>Header</div>
             {children}
         </div>
     );

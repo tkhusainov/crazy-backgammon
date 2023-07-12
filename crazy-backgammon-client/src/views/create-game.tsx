@@ -18,9 +18,11 @@ export const CreateGameView: React.FC = () => {
     }, [createGame, name]);
 
     return (
-        <div>
-            <input type="text" placeholder={t(T_KEYS.NAME)} onChange={(e) => setName(e.target.value)} />
-            <button onClick={handleStartGame}>{t(T_KEYS.CREATE_GAME)}</button>
+        <div className='tw-flex tw-items-center tw-justify-center tw-h-full'>
+            <div className='tw-flex tw-flex-col'>
+                <input type="text" placeholder={t(T_KEYS.NAME)} onChange={(e) => setName(e.target.value)} />
+                <button className='tw-bg-green tw-py-8 tw-px-12 tw-mt-4' onClick={handleStartGame}>{t(T_KEYS.CREATE_GAME)}</button>
+            </div>
         </div>
     )
 }
