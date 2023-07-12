@@ -1,0 +1,15 @@
+{
+    "INITIAL_SCREEN_VIEW": {
+        "CREATE_GAME": "Создать игру",
+        "JOIN_GAME": "Присоединиться"
+    },
+    "CREATE_GAME_VIEW": {
+        "NAME": "Имя",
+        "CREATE_GAME": "Создать игру"
+    },
+    "JOIN_GAME_VIEW": {
+        "NAME": "Имя",
+        "CODE": "Код",
+        "JOIN_GAME": "Присоединиться"
+    }
+}

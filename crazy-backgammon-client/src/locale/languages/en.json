@@ -1,0 +1,15 @@
+{
+    "INITIAL_SCREEN_VIEW": {
+        "CREATE_GAME": "Create game",
+        "JOIN_GAME": "Join game"
+    },
+    "CREATE_GAME_VIEW": {
+        "NAME": "Name",
+        "CREATE_GAME": "Create game"
+    },
+    "JOIN_GAME_VIEW": {
+        "NAME": "Name",
+        "CODE": "Code",
+        "JOIN_GAME": "Join game"
+    }
+}
