@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import mongoose from 'mongoose';
 
+import {startSocketServer} from './src/services/socket.server';
 import {applyRoutes} from './src/game-manager/routes';
 
 const app = express();
@@ -23,4 +24,6 @@ mongoose.connection.on('error', (err) => {
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
-})
+});
+
+startSocketServer(8085);

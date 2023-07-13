@@ -6,7 +6,5 @@ export function applyRoutes(app) {
     });
 
     app.post('/create-game', (req, res) => gameManagerController.createGame(req, res));
-    app.post('/join', (req, res) => {
-        res.send('Game joined')
-    });
+    app.post('/join-game', (req, res) => gameManagerController.joinGame(req, res));
 }

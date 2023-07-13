@@ -4,8 +4,15 @@ import {gameManagerService} from './service';
 
 class GameManagerController {
     async createGame(req: Request, res: Response) {
-        const {authorName, options} = req.body;
-        const game = await gameManagerService.createGame(authorName, options);
+        const {participant, options} = req.body;
+        let game = await gameManagerService.createGame(options);
+        game = await gameManagerService.joinGame(participant, game.code);
+        return res.send(game);
+    }
+
+    async joinGame(req: Request, res: Response) {
+        const {participant, code} = req.body;
+        const game = await gameManagerService.joinGame(participant, code);
         return res.send(game);
     }
 }

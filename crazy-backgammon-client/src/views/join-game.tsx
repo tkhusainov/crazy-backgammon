@@ -1,22 +1,32 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {v4 as uuidv4} from 'uuid';
 
 import {useRequest} from '../hooks/request';
 import {gameApi} from '../api/game.api';
 import {TRANSLATION_KEYS} from '../locale';
+import {GameInstance} from '../types';
 
 const T_KEYS = TRANSLATION_KEYS.JOIN_GAME_VIEW;
 
-export const JoinGameView: React.FC = () => {
+type Props = {
+    onGameJoin: (g: GameInstance, localParticipantId: string) => void;
+}
+
+export const JoinGameView: React.FC<Props> = ({onGameJoin}) => {
     const {t} = useTranslation();
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
+    const localParticipantId = useMemo(() => uuidv4(), []);
 
-    const {send: joinGame} = useRequest(gameApi.joinGame)
+    const handleJoinSuccess = useCallback((g: GameInstance) => {
+        onGameJoin(g, localParticipantId);
+    }, []);
+    const {send: joinGame} = useRequest(gameApi.joinGame, {onSuccess: handleJoinSuccess});
 
     const handleStartGame = useCallback(() => {
-        joinGame(name, code);
-    }, [joinGame, name, code]);
+        joinGame({id: localParticipantId, name}, code);
+    }, [localParticipantId, joinGame, name, code]);
 
     return (
         <div className='tw-flex tw-items-center tw-justify-center tw-h-full'>

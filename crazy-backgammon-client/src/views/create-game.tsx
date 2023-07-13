@@ -1,20 +1,30 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {v4 as uuidv4} from 'uuid';
 
 import {useRequest} from '../hooks/request';
 import {gameApi} from '../api/game.api';
+import {GameInstance} from '../types';
 import {TRANSLATION_KEYS} from '../locale';
 
 const T_KEYS = TRANSLATION_KEYS.CREATE_GAME_VIEW;
 
-export const CreateGameView: React.FC = () => {
+type Props = {
+    onGameCreated: (game: GameInstance, localParticipantId: string) => void;
+}
+
+export const CreateGameView: React.FC<Props> = ({onGameCreated}) => {
     const {t} = useTranslation();
     const [name, setName] = useState('');
+    const localParticipantId = useMemo(() => uuidv4(), []);
 
-    const {send: createGame} = useRequest(gameApi.createGame)
+    const handleCreateSuccess = useCallback((g: GameInstance) => {
+        onGameCreated(g, localParticipantId);
+    }, [onGameCreated, localParticipantId]);
+    const {send: createGame} = useRequest(gameApi.createGame, {onSuccess: handleCreateSuccess});
 
     const handleStartGame = useCallback(() => {
-        createGame(name, {isCrazy:  false});
+        createGame({id: localParticipantId, name}, {isCrazy:  false});
     }, [createGame, name]);
 
     return (
