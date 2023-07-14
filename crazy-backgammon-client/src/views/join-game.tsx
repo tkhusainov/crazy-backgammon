@@ -2,10 +2,10 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {v4 as uuidv4} from 'uuid';
 
-import {useRequest} from '../hooks/request';
-import {gameApi} from '../api/game.api';
-import {TRANSLATION_KEYS} from '../locale';
-import {GameInstance} from '../types';
+import {gameApi} from 'api';
+import {useRequest} from 'hooks';
+import {TRANSLATION_KEYS} from 'locale';
+import {GameInstance} from 'types';
 
 const T_KEYS = TRANSLATION_KEYS.JOIN_GAME_VIEW;
 
@@ -21,7 +21,7 @@ export const JoinGameView: React.FC<Props> = ({onGameJoin}) => {
 
     const handleJoinSuccess = useCallback((g: GameInstance) => {
         onGameJoin(g, localParticipantId);
-    }, []);
+    }, [localParticipantId, onGameJoin]);
     const {send: joinGame} = useRequest(gameApi.joinGame, {onSuccess: handleJoinSuccess});
 
     const handleStartGame = useCallback(() => {
@@ -36,5 +36,5 @@ export const JoinGameView: React.FC<Props> = ({onGameJoin}) => {
                 <button className='tw-bg-blue tw-py-8 tw-px-12' onClick={handleStartGame}>{t(T_KEYS.JOIN_GAME)}</button>
             </div>
         </div>
-    )
-}
+    );
+};

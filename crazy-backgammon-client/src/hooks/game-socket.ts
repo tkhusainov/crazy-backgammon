@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 
-import {Participant} from '../types';
-import {SocketEvent} from '../enums';
+import {SocketEvent} from 'enums';
+import {Participant} from 'types';
 
 type Props = {
     onParticipantConnected: (participant: Participant) => void;
@@ -18,9 +18,9 @@ export function useGameSocket({onParticipantConnected}: Props) {
                 if (data.event === SocketEvent.ParticipantConnected) {
                     onParticipantConnected(data.data.participant);
                 }
-            }
-        }
-    }, []);
+            };
+        };
+    }, [onParticipantConnected]);
 
     return null;
 }

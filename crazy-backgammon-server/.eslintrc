@@ -22,7 +22,13 @@
             "maxBOF": 0,
             "maxEOF": 1
         }],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-extra-semi": "error",
         "no-multi-spaces": "error",
+        "comma-spacing": [2],
         "no-console": ["warn"],
         "quotes": ["error", "single"],
         "space-before-function-paren": ["error", {"asyncArrow": "always", "named": "never"}],
@@ -40,10 +46,38 @@
         "import/order": [
             "error",
             {
-                "groups": ["builtin", "external"],
-                "newlines-between": "always"
+                "alphabetize": {
+                    "order": "asc"
+                },
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    [
+                        "parent",
+                        "sibling",
+                        "index"
+                    ]
+                ],
+                "newlines-between": "always",
+                "pathGroups": [
+                    {
+                        "group": "internal",
+                        "pattern": "^features/|utils/|services/|types/|enums/",
+                        "position": "after"
+                    }
+                ]
             }
         ],
         "object-curly-spacing": ["error", "never"]
+    },
+    "settings": {
+        "import/internal-regex": "^features/|utils/services/|types/|enums/",
+        "import/resolver": {
+            "node": {
+                "extensions": [".ts"],
+                "moduleDirectory": ["node_modules", "src"]
+            }
+        }
     }
 }

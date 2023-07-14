@@ -1,11 +1,11 @@
 import {v4 as uuidv4} from 'uuid';
 import {WebSocket} from 'ws';
 
-import {GameInstance, GameOptions, Participant} from '../types/game';
+import {SocketEvent} from 'enums';
+import {GameInstance, GameOptions, Participant, SocketMessage} from 'types';
+import {makeGameCode} from 'utils';
+
 import {GameModel} from './mongoose';
-import {makeGameCode} from '../utils/generator';
-import {SocketMessage} from '../types/socket';
-import {SocketEvent} from '../enums';
 
 class GameManagerService {
     private socket: WebSocket;
@@ -30,7 +30,7 @@ class GameManagerService {
         const socketMessage: SocketMessage = {
             event: SocketEvent.RoomCreated,
             roomCode: code
-        }
+        };
         this.socket.send(JSON.stringify(socketMessage));
 
         return gameModel;
@@ -49,7 +49,7 @@ class GameManagerService {
             event: SocketEvent.ParticipantConnected,
             roomCode: game.code,
             data: {participant}
-        }
+        };
         this.socket.send(JSON.stringify(socketMessage));
 
         return game;

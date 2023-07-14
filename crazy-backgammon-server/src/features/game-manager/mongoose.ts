@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import {GameInstance} from '../types/game';
+import {GameInstance} from 'types';
 
 const GameSchema = new mongoose.Schema<GameInstance>({
     id: {type: String, unique: true},

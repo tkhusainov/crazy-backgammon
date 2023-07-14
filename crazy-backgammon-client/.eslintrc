@@ -2,6 +2,7 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
+        "react",
         "@typescript-eslint"
     ],
     "extends": [
@@ -23,6 +24,12 @@
             "maxBOF": 0,
             "maxEOF": 1
         }],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-extra-semi": "error",
+        "comma-spacing": [2],
         "no-multi-spaces": "error",
         "no-console": ["warn"],
         "quotes": ["error", "single"],
@@ -41,10 +48,42 @@
         "import/order": [
             "error",
             {
-                "groups": ["builtin", "external"],
-                "newlines-between": "always"
+                "alphabetize": {
+                    "order": "asc"
+                },
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    [
+                        "parent",
+                        "sibling",
+                        "index"
+                    ]
+                ],
+                "newlines-between": "always",
+                "pathGroups": [
+                    {
+                        "group": "internal",
+                        "pattern": "^api/|components/|config/|constants/|classes/|enums/|views/|locale/|services/|types/|hooks/",
+                        "position": "after"
+                    }
+                ]
             }
         ],
         "object-curly-spacing": ["error", "never"]
+    },
+    "settings": {
+        "import/internal-regex": "^api/|components/|config/|constants/|classes/|enums/|views/|locale/|services/|types/|hooks/",
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"],
+                "moduleDirectory": ["node_modules", "src/"]
+            }
+        }
     }
 }

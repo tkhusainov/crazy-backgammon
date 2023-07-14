@@ -1,14 +1,10 @@
-import React, {Fragment, useCallback, useState} from 'react';
 import {map, includes} from 'lodash';
+import React, {Fragment, useCallback, useState} from 'react';
 
-import {GameStatus} from './enums';
-import {CreateGameView} from './views/create-game';
-import {Layout} from './views/layout';
-import {InitialScreen} from './views/initial-screen';
-import {JoinGameView} from './views/join-game';
-import {GameInstance, Participant} from './types';
-import {InGameView} from './views/in-game';
-import {useGameSocket} from './hooks/game-socket';
+import {GameStatus} from 'enums';
+import {useGameSocket} from 'hooks/game-socket';
+import {GameInstance, Participant} from 'types';
+import {CreateGameView, InGameView, InitialScreen, JoinGameView, Layout} from 'views';
 
 function App() {
     const [localParticipantId, setLocalParticipantId] = useState<string>('');
@@ -26,7 +22,7 @@ function App() {
                 return {
                     ...prev,
                     participants: [...prev.participants, participant]
-                }
+                };
             }
             return prev;
         });

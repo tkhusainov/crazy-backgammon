@@ -1,8 +1,8 @@
-import React from 'react';
 import {map} from 'lodash';
+import React from 'react';
 
-import {Board} from '../components';
-import {GameInstance} from '../types';
+import {Board} from 'components';
+import {GameInstance} from 'types';
 
 type Props = {
     game: GameInstance;
@@ -24,5 +24,5 @@ export const InGameView: React.FC<Props> = ({game, localParticipantId}) => {
             </div>
             <Board />
         </div>
-    )
-}
+    );
+};

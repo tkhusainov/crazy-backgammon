@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
 import {isEmpty} from 'lodash';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {BoardScene} from '../../classes/board.scene';
+import {BoardScene} from 'classes/board.scene';
 
 export const Board: React.FC = () => {
     const boardContainer = useRef(null);
@@ -19,5 +19,5 @@ export const Board: React.FC = () => {
 
     return (
         <div ref={boardContainer} className='board tw-w-96 tw-h-96 tw-bg-gray'></div>
-    )
-}
+    );
+};

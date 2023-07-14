@@ -1,4 +1,4 @@
-import {SocketEvent} from '../enums'
+import {SocketEvent} from 'enums';
 
 export type SocketMessage = {
     event: SocketEvent;

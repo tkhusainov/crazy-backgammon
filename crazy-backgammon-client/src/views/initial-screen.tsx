@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {TRANSLATION_KEYS} from '../locale';
+import {TRANSLATION_KEYS} from 'locale';
 
 const T_KEYS = TRANSLATION_KEYS.INITIAL_SCREEN_VIEW;
 
@@ -20,5 +20,5 @@ export const InitialScreen: React.FC<Props> = ({onCreateGame, onJoinGame}) => {
                 <button className='tw-bg-blue tw-py-8 tw-px-12' onClick={onJoinGame}>{t(t(T_KEYS.JOIN_GAME))}</button>
             </div>
         </div>
-    )
-}
+    );
+};

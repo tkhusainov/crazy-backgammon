@@ -11,7 +11,14 @@
             "es7",
             "DOM"
         ],
-        "baseUrl": "./src"
+        "baseUrl": "./src",
+        "paths": {
+            "enums/*": ["enums/*"],
+            "services/*": ["services/*"],
+            "features/*": ["features/*"],
+            "types/*": ["types/*"],
+            "utils/*": ["utils/*"]
+        },
     },
     "exclude": ["node_modules"],
     "include": ["./src/", "./app.ts", "./.eslintrc.js"]

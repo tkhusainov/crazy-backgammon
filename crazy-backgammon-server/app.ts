@@ -1,10 +1,12 @@
-import * as express from 'express';
+import 'module-alias/register';
+
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import * as express from 'express';
 import mongoose from 'mongoose';
 
-import {startSocketServer} from './src/services/socket.server';
-import {applyRoutes} from './src/game-manager/routes';
+import {applyRoutes} from './src/features/game-manager';
+import {startSocketServer} from './src/services';
 
 const app = express();
 const port = 3004;
@@ -23,7 +25,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`);
 });
 
 startSocketServer(8085);

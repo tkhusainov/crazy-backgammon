@@ -11,4 +11,4 @@ export const Layout: React.FC<Props> = ({children}) => {
             {children}
         </div>
     );
-}
+};

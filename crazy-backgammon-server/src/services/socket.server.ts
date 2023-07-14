@@ -1,7 +1,7 @@
 import {Server, WebSocket} from 'ws';
 
-import {SocketEvent} from '../enums';
-import {SocketMessage} from '../types/socket';
+import {SocketEvent} from 'enums';
+import {SocketMessage} from 'types';
 
 const rooms: Record<string, string[]> = {}; // {'ABCD': ['websocketId']}
 
