@@ -25,7 +25,7 @@ export const CreateGameView: React.FC<Props> = ({onGameCreated}) => {
 
     const handleStartGame = useCallback(() => {
         createGame({id: localParticipantId, name}, {isCrazy:  false});
-    }, [createGame, name]);
+    }, [createGame, localParticipantId, name]);
 
     return (
         <div className='tw-flex tw-items-center tw-justify-center tw-h-full'>

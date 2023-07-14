@@ -1,6 +1,7 @@
 import React from 'react';
 import {map} from 'lodash';
 
+import {Board} from '../components';
 import {GameInstance} from '../types';
 
 type Props = {
@@ -21,6 +22,7 @@ export const InGameView: React.FC<Props> = ({game, localParticipantId}) => {
                     </div>
                 ))}
             </div>
+            <Board />
         </div>
     )
 }
