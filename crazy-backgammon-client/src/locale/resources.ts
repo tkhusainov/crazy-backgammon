@@ -1,11 +1,12 @@
-import {transform, mergeWith} from 'lodash';
 import flatten from 'flat';
+import {transform, mergeWith} from 'lodash';
+
+import {DEFAULT_LANGUAGE, DELIMITER} from 'constants/language';
 
 import languages from './languages';
-import {DEFAULT_LANGUAGE, DELIMITER} from '../constants/language';
 import {Language} from '../enums';
 
-const mergeWithDefaultTranslations = (translations: any) => translations === defaultTranslations ? translations :
+const mergeWithDefaultTranslations = (translations) => translations === defaultTranslations ? translations :
     mergeWith({}, defaultTranslations, translations, (objValue, srcValue) => {
         if (srcValue === '') {
             return objValue;
@@ -20,4 +21,4 @@ const defaultTranslations = languageTranslations[DEFAULT_LANGUAGE];
 
 export const resources = transform(languageTranslations, (acc, translations, lang) => {
     acc[lang] = {translation: mergeWithDefaultTranslations(translations)};
-}, {} as any);
+}, {});

@@ -1,8 +1,9 @@
 // import {TranslationKeys} from '../translation-keys.type';
-import ru from './ru.json';
+import {DEFAULT_LANGUAGE} from 'constants/language';
+import {Language} from 'enums';
+
 import en from './en.json';
-import {Language} from '../../enums';
-import {DEFAULT_LANGUAGE} from '../../constants/language';
+import ru from './ru.json';
 import {TranslationKeys} from '../translation-keys.type';
 
 type DefaultLangName = typeof DEFAULT_LANGUAGE;

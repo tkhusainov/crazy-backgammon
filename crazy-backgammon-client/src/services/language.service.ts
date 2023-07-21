@@ -1,7 +1,7 @@
 import {getI18n} from 'react-i18next';
 
-import {DEFAULT_LANGUAGE} from '../constants/language';
-import {Language} from '../enums';
+import {DEFAULT_LANGUAGE} from 'constants/language';
+import {Language} from 'enums';
 
 export class LanguageService {
     private static language: Language;

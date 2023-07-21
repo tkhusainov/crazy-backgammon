@@ -1,5 +1,5 @@
-import * as THREE from 'three';
 import {forEach} from 'lodash';
+import * as THREE from 'three';
 
 export class Chip extends THREE.Mesh {
     constructor() {
@@ -28,14 +28,14 @@ export class BoardScene {
     private containerSize: {
         width: number;
         height: number;
-    }
+    };
 
     constructor(container: HTMLElement) {
         this.container = container;
         this.containerSize = {
             width: container.offsetWidth,
             height: container.offsetHeight
-        }
+        };
     }
 
     initialize() {

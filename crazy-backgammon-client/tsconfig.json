@@ -22,7 +22,8 @@
     "strictPropertyInitialization": false,
     "strictNullChecks": false,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "typeRoots" : ["./node_modules/@types"]
   },
   "include": [
     "src"

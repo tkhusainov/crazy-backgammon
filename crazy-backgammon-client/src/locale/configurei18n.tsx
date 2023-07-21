@@ -1,8 +1,9 @@
 import {use} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
-import {resources} from './resources'
-import {LanguageService} from '../services/language.service';
+import {LanguageService} from 'services/language.service';
+
+import {resources} from './resources';
 
 export default () => {
     use(initReactI18next)

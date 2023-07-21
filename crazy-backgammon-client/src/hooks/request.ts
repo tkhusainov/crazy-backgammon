@@ -17,7 +17,7 @@ type Options<T> = {
  * @param options.onSuccess Success callback. Should be wrapped with useCallback hook.
  * @param options.onError Error callback. Should be wrapped with useCallback hook.
  */
-export function useRequest<T, A extends any[] = []>(
+export function useRequest<T, A extends unknown[] = []>(
     fetchData: (...args: A) => Promise<T>,
     {
         onSuccess,
@@ -42,9 +42,9 @@ export function useRequest<T, A extends any[] = []>(
             setData(response);
             onSuccess?.(response);
             setLoadedAt(new Date());
-        } catch (e: any) {
-            setError(e);
-            onError?.(e);
+        } catch (e) {
+            setError(e as AxiosError);
+            onError?.(e as AxiosError);
         } finally {
             setLoading(false);
             setFirstDataLoaded(true);

@@ -15,4 +15,4 @@ async function joinGame(participant: Participant, code: string) {
 export const gameApi = {
     createGame,
     joinGame
-}
+};
