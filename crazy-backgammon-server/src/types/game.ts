@@ -1,3 +1,5 @@
+import {Board} from './board';
+
 export type Participant = {
     id: string;
     name: string;
@@ -13,6 +15,6 @@ export type GameInstance = {
     code: string;
     participants: Participant[];
     options: GameOptions;
-    board: any; // TODO: add type
+    board: Board;
     history: any[]; // TODO: add type
 }

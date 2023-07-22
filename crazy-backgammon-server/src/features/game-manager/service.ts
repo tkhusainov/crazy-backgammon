@@ -3,7 +3,7 @@ import {WebSocket} from 'ws';
 
 import {SocketEvent} from 'enums';
 import {GameInstance, GameOptions, Participant, SocketMessage} from 'types';
-import {makeGameCode} from 'utils';
+import {boardUtils, gameUtils, makeGameCode} from 'utils';
 
 import {GameModel} from './mongoose';
 
@@ -21,7 +21,8 @@ class GameManagerService {
             id: uuidv4(),
             code,
             options,
-            participants: []
+            participants: [],
+            board: boardUtils.getInitialBoard()
         });
 
         await gameModel.save();
@@ -42,7 +43,7 @@ class GameManagerService {
             throw new Error('game not found');
         }
 
-        game.participants.push(participant);
+        gameUtils.addParticipant(game, participant);
         game = await game.save();
 
         const socketMessage: SocketMessage = {
@@ -51,6 +52,13 @@ class GameManagerService {
             data: {participant}
         };
         this.socket.send(JSON.stringify(socketMessage));
+
+        const boardUpdatedMessage: SocketMessage = {
+            event: SocketEvent.BoardUpdated,
+            roomCode: game.code,
+            data: {board: game.board}
+        };
+        this.socket.send(JSON.stringify(boardUpdatedMessage));
 
         return game;
     }

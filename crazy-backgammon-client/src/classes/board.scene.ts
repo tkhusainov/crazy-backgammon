@@ -1,26 +1,41 @@
-import {find} from 'lodash';
+import {find, forEach, isNumber} from 'lodash';
 import * as THREE from 'three';
 
+import {ChipColor} from 'enums';
+import {GameChip} from 'types';
+
+const blackColor = new THREE.Color('black').convertSRGBToLinear();
+const whiteColor = new THREE.Color('white').convertSRGBToLinear();
+
+const FOV = 75;
+const CAMERA_Z = 15;
+
 export class Chip extends THREE.Mesh {
+    gameChipId: string;
     private static defaultColor = new THREE.Color('red').convertSRGBToLinear();
     private static hoverColor = new THREE.Color('blue').convertSRGBToLinear();
 
     isSelected: boolean;
 
-    constructor() {
+    constructor({position, color, id, radius}) {
         super();
-        const radius = 5;
-        const height = 2;
+        this.gameChipId = id;
+        const height = radius / 2;
         const radialSegments = 12;
         this.geometry = new THREE.CylinderGeometry(radius, radius, height, radialSegments);
-        this.material = new THREE.MeshStandardMaterial({color: Chip.defaultColor});
-        this.rotateX(Math.PI/4);
+        this.material = new THREE.MeshStandardMaterial({color});
+        // this.rotateX(Math.PI/4);
+
+        this.position.x = position.x;
+        this.position.y = position.y;
+        this.position.z = 0;
         this.isSelected = false;
+        this.rotateX(Math.PI/2);
     }
 
     render() {
-        this.rotateY(0.05);
-        this.rotateX(0.01);
+        // this.rotateY(0.05);
+        // this.rotateX(0.01);
     }
 
     onMouseIn() {
@@ -40,7 +55,6 @@ export class Chip extends THREE.Mesh {
         }
     }
 }
-
 export class BoardScene {
     private scene: THREE.Scene;
     private camera: THREE.Camera;
@@ -55,6 +69,12 @@ export class BoardScene {
     private hoveredChip = null;
     private selectedChip = null;
     private intersects = [];
+    private chips = [];
+    private level = {};
+    private viewportSize: {
+        width: number;
+        height: number;
+    };
 
     constructor(container: HTMLElement) {
         this.container = container;
@@ -70,11 +90,10 @@ export class BoardScene {
         this.scene.background = bgColor;
         const light = new THREE.HemisphereLight(0x404040, 0xFFFFFF, 1.5);
         this.scene.add(light);
-        const chip = new Chip();
-        this.scene.add(chip);
 
-        this.camera = new THREE.PerspectiveCamera(75, this.containerSize.width / this.containerSize.height, 0.1, 1000);
-        this.camera.position.z = 15;
+        this.camera = new THREE.PerspectiveCamera(FOV, this.containerSize.width / this.containerSize.height, 0.1, 1000);
+        this.camera.position.z = CAMERA_Z;
+        this.viewportSize = this.getViewportSize();
 
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(this.containerSize.width, this.containerSize.height);
@@ -99,6 +118,77 @@ export class BoardScene {
                 this.hoveredChip.onClick();
                 this.selectedChip = this.hoveredChip;
             }
+        });
+    }
+
+    private getViewportSize() {
+        const vFOV = THREE.MathUtils.degToRad(FOV);
+        const height = 2 * Math.tan(vFOV / 2) * CAMERA_Z;
+        const width = height * (this.containerSize.width / this.containerSize.height);
+
+        return {width, height};
+    }
+
+    private getChipSize() {
+        return this.viewportSize.width / (18.5);
+    }
+
+    private getHoleX(position: number): number {
+        const width = this.viewportSize.width;
+        const chipSize = this.getChipSize();
+        const half = chipSize / 2;
+        const offset = chipSize;
+        const chipOffset = chipSize / 4;
+
+        let x = 0;
+        if (position < 6) {
+            x = (width / 2) - offset - (chipSize + chipOffset) * position - half;
+        } else if (position >= 6 && position < 12) {
+            x = -offset - (chipSize + chipOffset) * (position % 6) - half;
+        } else if (position >= 12 && position < 18) {
+            x = -(width / 2) + offset + (chipSize + chipOffset) * (position % 6) + half;
+        } else {
+            x = offset + (chipSize + chipOffset) * (position % 6) - half;
+        }
+
+        return x;
+    }
+
+    private getChipY(position: number): number {
+        const height = this.viewportSize.height;
+        const level = this.level[position];
+        const offset = this.getChipSize();
+        const chipSize = this.getChipSize();
+        let y = 0;
+        if (position < 12) {
+            y = height / 2 - chipSize / 2 - (level * chipSize) - offset;
+        } else {
+            y = -height / 2 + chipSize / 2 + (level * chipSize) + offset;
+        }
+
+        return y;
+    }
+
+    private getChipCoordinates(position: number): {x: number, y: number} {
+        const x = this.getHoleX(position);
+        const y = this.getChipY(position);
+        return {x, y};
+    }
+
+    updateChips(gameChips: GameChip[]) {
+        forEach(gameChips, (gameChip) => {
+            this.level[gameChip.position] = isNumber(this.level[gameChip.position]) ? this.level[gameChip.position] + 1 : 0;
+            const position = this.getChipCoordinates(gameChip.position);
+            const color = gameChip.color === ChipColor.Black ? blackColor : whiteColor;
+
+            const chip = new Chip({
+                position,
+                id: gameChip.id,
+                color,
+                radius: this.getChipSize()/2
+            });
+
+            this.scene.add(chip);
         });
     }
 

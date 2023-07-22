@@ -20,7 +20,7 @@ function onRoomCreated(message: SocketMessage) {
     rooms[message.roomCode] = [];
 }
 
-function onParticipantConnected(message: SocketMessage, ws: WebSocket, wss: Server) {
+function broadcastEvent(message: SocketMessage, ws: WebSocket, wss: Server) {
     const roomCode = message.roomCode;
     if (!rooms[roomCode]) {
         throw new Error('room not found ' + message);
@@ -44,9 +44,8 @@ export function startSocketServer(port: number) {
             case SocketEvent.RoomCreated:
                 onRoomCreated(message);
                 return;
-            case SocketEvent.ParticipantConnected:
-                onParticipantConnected(message, ws, wss);
-                return;
+            default:
+                broadcastEvent(message, ws, wss);
             }
         });
     });

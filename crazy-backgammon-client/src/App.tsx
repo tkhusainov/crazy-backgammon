@@ -3,7 +3,7 @@ import React, {Fragment, useCallback, useState} from 'react';
 
 import {GameStatus} from 'enums';
 import {useGameSocket} from 'hooks/game-socket';
-import {GameInstance, Participant} from 'types';
+import {Board, GameInstance, Participant} from 'types';
 import {CreateGameView, InGameView, InitialScreen, JoinGameView, Layout} from 'views';
 
 function App() {
@@ -27,7 +27,23 @@ function App() {
             return prev;
         });
     }, []);
-    useGameSocket({onParticipantConnected: handleParticipantConnected});
+
+    const handleBoardUpdated = useCallback((board: Board) => {
+        setGame((prev) => {
+            if (prev) {
+                return {
+                    ...prev,
+                    board
+                };
+            }
+            return prev;
+        });
+    }, []);
+
+    useGameSocket({
+        onParticipantConnected: handleParticipantConnected,
+        onBoardUpdated: handleBoardUpdated
+    });
 
     const handleGameStart = useCallback((g: GameInstance, participantId: string) => {
         setGame(g);
